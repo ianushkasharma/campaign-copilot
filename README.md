@@ -1,120 +1,25 @@
 # Campaign Copilot
 
-Campaign Copilot is an AI-native marketing CRM built for internship evaluation. It demonstrates full-stack product thinking across data modeling, campaign planning, AI agents, analytics, monitoring, and recruiter-friendly documentation.
+Campaign Copilot is a full-stack marketing CRM and campaign management platform that combines customer analytics, audience segmentation, campaign planning, monitoring, and AI-assisted decision support.
 
-## What It Does
+The project demonstrates backend architecture, data modeling, analytics engineering, AI integration, and dashboard development using FastAPI, Streamlit, SQLite, and Gemini.
 
-Campaign Copilot helps a marketer:
+---
 
-- Explore customers and audience segments.
-- Ask for audiences in natural language.
-- Generate campaign plans with Gemini-powered agents.
-- Predict campaign performance before launch.
-- Simulate channel delivery and callbacks.
-- Monitor campaign events live.
-- Analyze completed campaigns with AI insights.
-- Score customers using RFM, health, and engagement metrics.
+## Features
 
-## Evaluation Highlights
+### Customer Analytics Dashboard
 
-- 5,000 seeded customers and 20,000 seeded orders.
-- Clean FastAPI backend with routers, schemas, services, repositories, and SQLAlchemy models.
-- Streamlit frontend with dashboard, audience explorer, campaign planner, monitor, and AI insights pages.
-- Gemini-backed agents with deterministic fallbacks for reliable demos.
-- Separate Channel Simulator service using async background tasks and CRM callbacks.
-- Analytics layer with RFM Analysis, Customer Health Score, Engagement Score, Campaign Success Score, and best performing audience leaderboard.
-- AI-generated segment names for leaderboard audiences.
-- Recruiter-ready docs, deployment guide, architecture diagram, and 5-minute demo script.
-
-## Tech Stack
-
-- Frontend: Streamlit, Plotly, pandas
-- Backend: FastAPI
-- Database: SQLite + SQLAlchemy
-- AI: Gemini
-- Services:
-  - CRM Service
-  - Channel Simulator Service
-
-## Project Structure
-
-```text
-campaign-copilot/
-|-- crm_service/
-|   |-- agents/
-|   |-- routers/
-|   |-- models/
-|   |-- schemas/
-|   |-- services/
-|   |-- repositories/
-|   `-- utils/
-|-- channel_service/
-|-- streamlit_app/
-|-- shared/
-|-- data/
-|-- docs/
-|-- tests/
-|-- seed.py
-|-- requirements.txt
-|-- .env.example
-`-- README.md
-```
-
-## Quick Start
-
-```bash
-python -m venv .venv
-source .venv/bin/activate
-pip install -r requirements.txt
-cp .env.example .env
-python seed.py
-```
-
-Windows PowerShell:
-
-```powershell
-python -m venv .venv
-.venv\Scripts\Activate.ps1
-pip install -r requirements.txt
-Copy-Item .env.example .env
-python seed.py
-```
-
-Run CRM:
-
-```bash
-uvicorn crm_service.main:app --host 127.0.0.1 --port 8001 --reload
-```
-
-Run Channel Simulator:
-
-```bash
-uvicorn channel_service.main:app --host 127.0.0.1 --port 8002 --reload
-```
-
-Run Streamlit:
-
-```bash
-streamlit run streamlit_app/app.py
-```
-
-## App URLs
-
-- Streamlit app: `http://127.0.0.1:8501`
-- CRM OpenAPI docs: `http://127.0.0.1:8001/docs`
-- Channel Simulator OpenAPI docs: `http://127.0.0.1:8002/docs`
-
-## Main Features
-
-### Dashboard
-
-- Customer metrics
-- Loyalty and channel charts
-- RFM score table
-- Customer Health Score
-- Engagement Score
+* Customer overview and business KPIs
+* Revenue and order analytics
+* Loyalty tier distribution
+* Preferred communication channel analysis
+* Customer engagement metrics
+* Customer health scoring
 
 ### Audience Explorer
+
+Convert natural language audience requests into structured customer filters.
 
 Example:
 
@@ -122,97 +27,302 @@ Example:
 Find inactive customers who spent more than 5000
 ```
 
-AudienceAgent converts the request into filters, queries SQLite, and returns audience size, reasoning, and customer preview.
+The system:
 
-### Campaign Copilot
+* Interprets the request
+* Generates customer filters
+* Queries the CRM database
+* Returns audience size and customer preview
 
-Example:
+### Campaign Planning
+
+Generate campaign recommendations based on customer audiences.
+
+Outputs include:
+
+* Campaign objective
+* Target audience
+* Recommended communication channel
+* Suggested offer
+* Marketing message
+* Expected campaign performance
+
+### Campaign Monitoring
+
+Track campaign performance through:
+
+* Messages sent
+* Delivered
+* Opened
+* Clicked
+* Purchased
+* Failed
+
+Includes:
+
+* Live campaign metrics
+* Event tracking
+* Progress indicators
+* Campaign timeline
+
+### AI Insights
+
+Analyze completed campaigns and generate actionable recommendations.
+
+Insights include:
+
+* Performance summary
+* Best-performing audience
+* Best-performing channel
+* Revenue contribution
+* Recommended next actions
+
+### Customer Scoring & Analytics
+
+The platform includes:
+
+* RFM Analysis
+* Customer Health Score
+* Engagement Score
+* Campaign Success Score
+* Audience Performance Leaderboard
+
+---
+
+## Technology Stack
+
+### Frontend
+
+* Streamlit
+* Plotly
+* Pandas
+
+### Backend
+
+* FastAPI
+* SQLAlchemy
+* Pydantic
+
+### Database
+
+* SQLite
+
+### AI
+
+* Google Gemini
+
+### Architecture
+
+* CRM Service
+* Channel Simulator Service
+* Shared Analytics Layer
+
+---
+
+## Project Structure
 
 ```text
-Bring back inactive customers.
+campaign-copilot/
+│
+├── crm_service/
+│   ├── agents/
+│   ├── routers/
+│   ├── models/
+│   ├── schemas/
+│   ├── services/
+│   ├── repositories/
+│   └── utils/
+│
+├── channel_service/
+├── streamlit_app/
+├── shared/
+├── data/
+├── docs/
+├── tests/
+│
+├── seed.py
+├── requirements.txt
+├── .env.example
+└── README.md
 ```
 
-CampaignPlannerAgent returns:
+---
 
-- Goal understanding
-- Recommended audience
-- Audience reasoning
-- Recommended channel
-- Recommended offer
-- Personalized message
-- Expected performance
+## Dataset
 
-### Campaign Prediction Engine
+The project uses a seeded CRM dataset containing:
 
-Inputs:
+* 5,000 customers
+* 20,000 orders
 
-- Audience characteristics
-- Channel
-- Offer
+The synthetic dataset enables realistic testing of:
 
-Outputs:
+* Customer segmentation
+* Campaign planning
+* Analytics workflows
+* Marketing performance simulations
 
-- Predicted open rate
-- Predicted click rate
-- Predicted conversion rate
-- Predicted revenue
+---
 
-### Campaign Monitor
+## Installation
 
-Reads from `campaign_events` and shows:
+### Clone Repository
 
-- Messages Sent
-- Delivered
-- Opened
-- Clicked
-- Purchased
-- Failed
-- Progress bars
-- Live refresh
-- Event timeline
+```bash
+git clone https://github.com/ianushkasharma/campaign-copilot.git
+cd campaign-copilot
+```
 
-### AI Insights Engine
+### Create Virtual Environment
 
-After campaign completion, InsightsAgent generates:
+#### Windows
 
-- What happened
-- Why it happened
-- Best segment
-- Worst segment
-- Best channel
-- Revenue generated
-- Recommended next action
+```bash
+python -m venv .venv
+.venv\Scripts\Activate.ps1
+```
 
-### Analytics for Evaluation
+#### Linux / macOS
 
-- RFM Analysis
-- Customer Health Score
-- Engagement Score
-- Campaign Success Score
-- AI-generated segment names
-- Best performing audience leaderboard
+```bash
+python -m venv .venv
+source .venv/bin/activate
+```
 
-## Important Endpoints
+### Install Dependencies
 
-- `POST /audiences/query`
-- `POST /campaign-copilot/plan`
-- `POST /predictions/campaign`
-- `GET /campaign-monitor`
-- `POST /ai-insights/analyze`
-- `GET /analytics/customer-scores`
-- `GET /analytics/campaign-success`
-- `GET /analytics/audience-leaderboard`
-- `POST /send-campaign`
-- `POST /receipt`
-- Channel Simulator: `POST /send`
+```bash
+pip install -r requirements.txt
+```
 
-## Documentation
+### Configure Environment
 
-- [Architecture Diagram](docs/architecture_diagram.md)
-- [Architecture Notes](docs/architecture.md)
-- [Deployment Guide](docs/deployment_guide.md)
-- [5-Minute Demo Script](docs/demo_script.md)
+```bash
+copy .env.example .env
+```
 
-## Why This Is Internship-Ready
+Add your Gemini API key:
 
-This project shows more than CRUD. It demonstrates product reasoning, backend architecture, AI integration, analytics modeling, frontend UX, and demo readiness. The code is intentionally modular so each feature can be explained in an interview: agents handle AI, services handle use cases, repositories handle persistence, and Streamlit turns the backend into a usable product.
+```env
+GEMINI_API_KEY=your_api_key_here
+GEMINI_MODEL=gemini-1.5-flash
+```
+
+### Seed Database
+
+```bash
+python seed.py
+```
+
+---
+
+## Running the Application
+
+### CRM Service
+
+```bash
+uvicorn crm_service.main:app --host 127.0.0.1 --port 8001 --reload
+```
+
+### Channel Simulator
+
+```bash
+uvicorn channel_service.main:app --host 127.0.0.1 --port 8002 --reload
+```
+
+### Streamlit Dashboard
+
+```bash
+streamlit run streamlit_app/app.py
+```
+
+---
+
+## Application URLs
+
+| Service              | URL                        |
+| -------------------- | -------------------------- |
+| Streamlit Dashboard  | http://127.0.0.1:8501      |
+| CRM API Docs         | http://127.0.0.1:8001/docs |
+| Channel Service Docs | http://127.0.0.1:8002/docs |
+
+---
+
+## API Endpoints
+
+### Audience Management
+
+```http
+POST /audiences/query
+```
+
+### Campaign Planning
+
+```http
+POST /campaign-copilot/plan
+```
+
+### Campaign Prediction
+
+```http
+POST /predictions/campaign
+```
+
+### Campaign Monitoring
+
+```http
+GET /campaign-monitor
+```
+
+### AI Insights
+
+```http
+POST /ai-insights/analyze
+```
+
+### Analytics
+
+```http
+GET /analytics/customer-scores
+GET /analytics/campaign-success
+GET /analytics/audience-leaderboard
+```
+
+### Campaign Delivery
+
+```http
+POST /send-campaign
+POST /receipt
+POST /send
+```
+
+---
+
+## Key Learnings
+
+* Designed a modular FastAPI backend using routers, services, repositories, and SQLAlchemy models.
+* Built customer segmentation workflows combining natural language requests with structured database filtering.
+* Implemented interactive dashboards using Streamlit and Plotly.
+* Developed customer analytics using RFM scoring, engagement metrics, and campaign performance indicators.
+* Built asynchronous campaign event tracking and monitoring workflows.
+* Integrated Gemini to support audience exploration and campaign planning tasks.
+
+---
+
+## Future Improvements
+
+* Multi-channel campaign orchestration
+* A/B testing framework
+* Advanced predictive analytics
+* Customer lifetime value prediction
+* Automated campaign optimization
+* Cloud deployment with PostgreSQL and Docker
+
+---
+
+## Author
+
+Anushka Sharma
+
+B.Tech Computer Science Engineering
+SRM Institute of Science and Technology
